@@ -9,24 +9,26 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class DragAndDropTest {
     @BeforeAll
-    static void BeforeAll() {
+    static void beforeAll() {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://the-internet.herokuapp.com";
     }
 
     @Test
-    void MoveAToBByActions() {
+    void moveAToBByActions() {
         Selenide.open("/drag_and_drop");
         SelenideElement elementA = $("#column-a");
         SelenideElement elementB = $("#column-b");
         actions().clickAndHold(elementA).moveToElement(elementB).release().perform();
         $("#column-b").shouldHave(text("A"));
+        $("#column-a").shouldHave(text("B"));
     }
 
     @Test
-    void MoveAToBByDragAndDrop() {
+    void moveAToBByDragAndDrop() {
         Selenide.open("/drag_and_drop");
         $("#column-a").dragAndDropTo("#column-b");
         $("#column-b").shouldHave(text("A"));
+        $("#column-a").shouldHave(text("B"));
     }
 }
